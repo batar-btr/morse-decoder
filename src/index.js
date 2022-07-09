@@ -37,8 +37,25 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+const DOT_DASH = {
+    '10': '.',
+    '11': '-'
+}
+
 function decode(expr) {
     // write your solution here
+    let charArr = expr.match(/.{10}/g);
+
+    const charDecoder = char => {
+        if(char === '**********') {
+            return ' ';
+        }
+        let dotDashArr = char.match(/\d{2}/g).filter(item => item !== '00');
+        let morzeChar = dotDashArr.map(char => DOT_DASH[char]);
+        return MORSE_TABLE[morzeChar.join('')]
+    }
+
+    return charArr.map(char => charDecoder(char)).join('');
 }
 
 module.exports = {
